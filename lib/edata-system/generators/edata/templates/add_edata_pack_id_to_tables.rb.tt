@@ -1,0 +1,12 @@
+class AddEdataPackIdToTables < ActiveRecord::Migration[6.0]
+  def change
+    add_column :visits, :edata_pack_id, :binary, limit: 16
+    add_column :users, :edata_pack_id, :binary, limit: 16
+
+    add_foreign_key :visits, :edata_packs, column: :edata_pack_id, primary_key: :id
+    add_foreign_key :users, :edata_packs, column: :edata_pack_id, primary_key: :id
+
+    add_index :visits, :edata_pack_id
+    add_index :users, :edata_pack_id
+  end
+end

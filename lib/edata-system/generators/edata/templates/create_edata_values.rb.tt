@@ -1,0 +1,18 @@
+class CreateEdataValues < ActiveRecord::Migration[6.0]
+  def change
+    create_table :edata_values, id: false do |t|
+      t.binary :id, limit: 16, primary_key: true
+      t.binary :edata_pack_id, limit: 16, null: false
+      t.binary :edata_definition_id, limit: 16, null: false
+      t.string :event
+      t.boolean :is_latest, default: true
+      t.text :value
+      t.string :data_pointer
+
+      t.timestamps
+    end
+
+    add_foreign_key :edata_values, :edata_packs, column: :edata_pack_id, primary_key: :id
+    add_foreign_key :edata_values, :edata_definitions, column: :edata_definition_id, primary_key: :id
+  end
+end

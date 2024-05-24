@@ -1,0 +1,10 @@
+require 'edata-system/patches/health_recordable_patch'
+
+ActiveSupport.on_load(:active_record) do
+  if defined?(HealthRecordable)
+    Rails.logger.warn 'Loading HealthRecordablePatch'
+    HealthRecordable.include(EdataSystem::Patches::HealthRecordablePatch)
+  else
+    Rails.logger.error "HealthRecordable is not defined"
+  end
+end

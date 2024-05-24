@@ -1,0 +1,13 @@
+class CreateEdataMigrationStatuses < ActiveRecord::Migration[6.0]
+  def change
+    create_table :edata_migration_statuses do |t|
+      t.references :migratable, polymorphic: true, index: { name: 'index_migration_statuses_on_migratable' }
+      t.boolean :health_doc_migrated, default: false
+      t.binary :edata_pack_id, limit: 16, index: true
+
+      t.timestamps
+    end
+
+    add_foreign_key :migration_statuses, :edata_packs, column: :edata_pack_id
+  end
+end
